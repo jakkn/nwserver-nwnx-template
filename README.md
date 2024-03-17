@@ -1,21 +1,24 @@
 # nwserver-nwnx-template
 
-For new nwnee nwnx projects
+Template for nwnee projects with nwnx installed, running Docker.
+
+Useful to get quickly up and running for proof of concepts, testing features, or reproducing bugs.
 
 ## Getting started
 
 ### Init
 
-Initialize the project by running
+1. Run `./init.sh` to get started with an nwnx version
+1. Run `nasher init` to get started with the project sources
 
-```bash
-./init.sh
-```
+### Use
 
-This will get you started by helping you select an nwnx version.
+Use [nasher](https://github.com/squattingmonk/nasher) to manage the sources.
 
-### Run
+A utility script named `./run-commands.sh` has been added to speed up running frequent commands, inlcuding a useful watch-utility to hot compile scripts on file save (option 2).
 
-```
-docker compose up -d
-```
+## Requirements
+
+- `docker` (with `compose`)
+- `nasher`
+- `entr` (to hot compile)
