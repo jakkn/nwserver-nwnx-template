@@ -1,0 +1,19 @@
+version: "3"
+services:
+  nwserver:
+    image: ${IMAGE_TAG:-ghcr.io/nwnxee/unified}
+    restart: unless-stopped
+    volumes:
+      - ${PWD-.}/logs:/nwn/run/logs.0
+      - ${PWD-.}/logs:/nwn/data/bin/linux-x86/logs.0
+      - ${PWD-.}/server/:/nwn/home
+      - ${PWD-.}/.nasher/cache/default/:/nwn/home/development
+    env_file: ./config/nwserver.env
+    environment:
+      NWN_DMPASSWORD: "${NWN_DMPASSWORD:-dm}"
+      NWN_PLAYERPASSWORD: "${NWN_PLAYERPASSWORD:-}"
+      NWN_ADMINPASSWORD: "${NWN_ADMINPASSWORD:-}"
+    ports:
+      - "5121:5121/udp"
+    stdin_open: true
+    tty: true
