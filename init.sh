@@ -34,6 +34,9 @@ __setup_anvil() {
   _versions=$(__get_list_of_release_tags_for_repo nwn-dotnet/anvil)
   _anvil_version=$(printf "%s\n" "$_versions" | _pipe_select)
 
+  ## Remove leading 'v' if present, because the image is tagged without
+  _anvil_version=${_anvil_version#v}
+
   _write_to_env_file IMAGE_TAG "ghcr.io/nwn-dotnet/anvil:$_anvil_version" .env
 }
 
