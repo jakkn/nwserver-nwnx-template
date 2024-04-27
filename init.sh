@@ -1,36 +1,27 @@
 #!/usr/bin/env bash
 
-set -e
+set -e -u
 
-pipe_select() {
-  readarray -t opts
-  select foo in "${opts[@]}"
-  do
-    echo "${foo}";
-    break;
-  done < /dev/tty
+source "$(git rev-parse --show-toplevel)/scripts/utils.sh"
+
+__get_list_of_release_tags_for_repo() {
+  curl -L \
+       -H "Accept: application/vnd.github+json" \
+       -H "X-GitHub-Api-Version: 2022-11-28" \
+       https://api.github.com/repos/"$1"/releases | jq -r ".[] | .tag_name" | grep -v "HEAD" | sort -V | tac
 }
 
-VERSIONS=$(curl -L \
-  -H "Accept: application/vnd.github+json" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/nwnxee/unified/releases | jq -r ".[] | .tag_name" | grep -v "HEAD" | sort -V | tac);
+# Ask which nwnx version we want to use
+_versions=$(__get_list_of_release_tags_for_repo nwnxee/unified)
+_nwnx_version=$(printf "%s\n" "$_versions" | _pipe_select)
 
-VERSION=$(printf "%s\n" "$VERSIONS" | pipe_select)
-
-if [ -z "$VERSION" ]; then
-  echo "No version selected"
-  exit 1
-elif [ "$VERSION" = "latest" ]; then
-  VERSION=$(printf "%s\n" "$VERSIONS" | head -n 2 | tail -n 1)
-  printf "Using image 'latest' is not adviced as the local image will not be automatically updated when a new release is published.\nUsing the next option instead: %s\n" "$VERSION"
+if [ -z "$_nwnx_version" ]; then
+  _die "No version selected"
+elif [ "$_nwnx_version" = "latest" ]; then
+  _nwnx_version=$(printf "%s\n" "$_versions" | head -n 2 | tail -n 1)
+  printf "Using image 'latest' is not adviced as the local image will not be automatically updated when a new release is published.\nUsing the next option instead: %s\n" "$_nwnx_version"
 fi
 
-export VERSION=$VERSION
-
-envsubst < .env > .env.tmp
-mv .env.tmp .env
-
-echo "IMAGE_TAG=nwnxee/unified:$VERSION has been written to .env"
+_write_to_env_file IMAGE_TAG "ghcr.io/nwnxee/unified:$_nwnx_version" .env
 
 exit 0
