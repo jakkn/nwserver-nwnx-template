@@ -43,7 +43,7 @@ _write_to_env_file() {
   echo -e "\nWrite $_gray$env_file$_nc:"
   echo -e "$_blue$key$_nc=$value\n"
 
-  sed -i -e "s/$key=.*/$key=$value/" "$env_file"
+  sed -i -e "s|$key=.*|$key=$value|" "$env_file" # non-standard delimiter because $value contains slashes
 }
 
 # Takes a list of options and prompts the user to select one, returning the selected option
