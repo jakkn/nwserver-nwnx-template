@@ -1,6 +1,8 @@
 # nwserver-nwnx-template
 
-Template for nwnee projects with nwnx installed, running Docker.
+Template for nwnee projects with nwnx installed, running in Docker containers.
+
+Also supports initializing nwnx_dotnet with Anvil and setting up an Anvil plugin.
 
 Useful to get quickly up and running for proof of concepts, testing features, or reproducing bugs.
 
@@ -22,3 +24,4 @@ A utility script named `./run-commands.sh` has been added to speed up running fr
 - `docker` (with `compose`)
 - `nasher`
 - `entr` (to hot compile)
+- `dotnet` if creating an Anvil project
