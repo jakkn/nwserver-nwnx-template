@@ -25,9 +25,7 @@ _die() {
 
 # Overwrite key-value pairs in .env
 _write_to_env_file() {
-  local key=$1
-  local value=$2
-  local env_file=$3
+  local key=$1 value=$2 env_file=$3
 
   if [[ ! -f $env_file ]]; then
     _die "$env_file does not exist"
