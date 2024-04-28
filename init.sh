@@ -61,6 +61,9 @@ __setup_anvil_plugin() {
 
     dotnet new anvilplugin --output "$_plugin_folder" --name "$_plugin_name"
 
+    # Patch the target framework (TODO: remove after NWN.Templates is updated)
+    sed -i -e 's/net6.0/net7.0/g' "$_plugin_folder"/"$_plugin_name".csproj
+
     # Update the NWN.Anvil package version
     dotnet add "$_plugin_folder/$_plugin_name.csproj" package NWN.Anvil --version "$_anvil_version"
     # Mount the plugin directory to the container
