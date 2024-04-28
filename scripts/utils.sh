@@ -44,6 +44,21 @@ _write_to_env_file() {
   sed -i -e "s|$key=.*|$key=$value|" "$env_file" # non-standard delimiter because $value contains slashes
 }
 
+_yaml_append() {
+  local key=$1 value=$2 file=$3
+
+  echo -e "\nWrite $_gray$file$_nc:"
+  echo -e "$_blue$key$_nc: $_orange\"$value\"$_nc\n"
+
+  if [[ ! -f $file ]]; then _die "$file does not exist"; fi
+  if [[ ! $key ]]; then _die "key not specified" 1>&2; fi
+  if [[ ! $value ]]; then _die "value not specified" 1>&2; fi
+
+  # yq strips witespaces and newlines, so we parse the diff and patch it to preserve as much of the original content as possible
+  # See https://github.com/mikefarah/yq/issues/515
+  yq eval "$key += \"$value\"" "$file" | diff -Bw --strip-trailing-cr "$file" - | patch "$file" -
+}
+
 # Takes a list of options and prompts the user to select one, returning the selected option
 _pipe_select() {
   readarray -t opts

@@ -63,6 +63,8 @@ __setup_anvil_plugin() {
 
     # Update the NWN.Anvil package version
     dotnet add "$_plugin_folder/$_plugin_name.csproj" package NWN.Anvil --version "$_anvil_version"
+    # Mount the plugin directory to the container
+    _yaml_append .services.nwserver.volumes "$_plugin_folder/bin/Debug/$_plugin_name:/nwn/run/anvil/Plugins/$_plugin_name" "$_toplevel"/docker-compose.dev.yaml
   fi
 }
 
