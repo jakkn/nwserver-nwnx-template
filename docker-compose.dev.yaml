@@ -1,0 +1,6 @@
+version: "3"
+services:
+  nwserver:
+    restart: "no"
+    volumes:
+      - ${PWD-.}/.nasher/cache/default/:/nwn/home/development

@@ -7,7 +7,6 @@ services:
       - ${PWD-.}/logs:/nwn/run/logs.0
       - ${PWD-.}/logs:/nwn/data/bin/linux-x86/logs.0
       - ${PWD-.}/server/:/nwn/home
-      - ${PWD-.}/.nasher/cache/default/:/nwn/home/development
     env_file: ./config/nwserver.env
     environment:
       NWN_DMPASSWORD: "${NWN_DMPASSWORD:-dm}"
