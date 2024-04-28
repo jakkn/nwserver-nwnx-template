@@ -6,7 +6,7 @@ options=("docker down & up" "nss watch" "extract module" "nss all" "pack module"
 while true; do
   select option in "${options[@]}" Quit; do
     case $REPLY in
-      1) docker compose -f docker-compose.yaml -f docker-compose.dev.yml down && docker compose -f docker-compose.yaml -f docker-compose.dev.yml up -d; break;;
+      1) docker compose -f docker-compose.yaml -f docker-compose.dev.yaml down && docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d; break;;
       2) ./nwn-build.sh compile -w; break;;
       3) nasher unpack; break;;
       4) ./nwn-build.sh compile; break;;
