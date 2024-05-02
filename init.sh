@@ -74,8 +74,8 @@ __setup_anvil_plugin() {
 
 ## Main ##
 
-_choice=$(echo -e "nwnx\nAnvil" | _pipe_select)
-case $_choice in
+__reply=$(echo -e "nwnx\nAnvil" | _pipe_select)
+case $__reply in
   nwnx) __setup_nwnx;;
   Anvil) __setup_anvil; __setup_anvil_plugin;;
   *) _die "Invalid option";;

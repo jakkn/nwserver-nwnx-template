@@ -1,19 +1,21 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m'
+set -u
 
-FILE="$1"
-FILE_NAME=$(basename "$FILE")
+# Make sure our neighbor imports work no matter where we run the script from
+__current_dir="${BASH_SOURCE%/*}"
+if [[ ! -d "$__current_dir" ]]; then __current_dir="$PWD"; fi
+source "$__current_dir/scripts/utils.sh"
 
-EXIT_CODE=0
+__file_name=$(basename "$1")
+
+__exit_code=0
 if [[ -x "$(command -v nasher)" ]]; then
-  nasher compile -f:"$FILE_NAME" || EXIT_CODE=$?
+  nasher compile -f:"$__file_name" || __exit_code=$?
 fi
 
-if [[ "$EXIT_CODE" -ne 0 ]]; then
-  echo -e "${RED}Failed${NC}"
+if [[ "$__exit_code" -ne 0 ]]; then
+  _die "Failed to compile '$__file_name'"
 else
-  echo -e "${GREEN}Done${NC}"
+  echo -e "${_green}Done${_nc}"
 fi
