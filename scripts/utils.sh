@@ -15,7 +15,7 @@ _toplevel=$(git rev-parse --show-toplevel)
 export _toplevel
 
 _warn() {
-  echo >&2 "${_orange}WARN${_nc}:: $*"
+  echo -e >&2 "${_orange}WARN${_nc}:: $*"
 }
 
 _die() {
