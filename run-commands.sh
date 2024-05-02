@@ -11,7 +11,7 @@ while true; do
       3) nasher unpack; break;;
       4) ./nwn-build.sh compile; break;;
       5) nasher pack; break;;
-      6) docker restart bop; break;;
+      6) docker compose restart nwserver; break;;
       $((${#options[@]}+1))) break 2;;
       *) echo "invalid option $REPLY"; break;;
     esac
