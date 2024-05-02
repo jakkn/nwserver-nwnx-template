@@ -12,7 +12,7 @@ while true; do
   select option in "${options[@]}" Quit; do
     case $REPLY in
       1) docker compose -f docker-compose.yaml -f docker-compose.dev.yaml down && docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up -d; break;;
-      2) ./nwn-build.sh compile --watch; break;;
+      2) "$__scripts_path"/nwn-build.sh compile --watch; break;;
       3) nasher compile; break;;
       4) nasher pack; break;;
       5) nasher unpack; break;;
