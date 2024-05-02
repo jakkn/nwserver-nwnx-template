@@ -54,6 +54,9 @@ _yaml_append() {
   if [[ ! $key ]]; then _die "key not specified" 1>&2; fi
   if [[ ! $value ]]; then _die "value not specified" 1>&2; fi
 
+  # Test that we have yq on the path
+  command -v yq >/dev/null 2>&1 || { _die "yq is not installed. We need it to update YAML files. See https://github.com/mikefarah/yq?tab=readme-ov-file#install"; }
+
   # yq strips witespaces and newlines, so we parse the diff and patch it to preserve as much of the original content as possible
   # See https://github.com/mikefarah/yq/issues/515
   yq eval "$key += \"$value\"" "$file" | diff -Bw --strip-trailing-cr "$file" - | patch "$file" -

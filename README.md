@@ -21,7 +21,13 @@ A utility script named `./run-commands.sh` has been added to speed up running fr
 
 ## Requirements
 
+Essentials:
+
 - `docker` (with `compose`)
 - `nasher`
 - `entr` (to hot compile)
-- `dotnet` if creating an Anvil project
+
+Anvil:
+
+- `dotnet`
+- `yq` (to update compose configs)
